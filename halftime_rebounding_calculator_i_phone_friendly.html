@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>REB% & TOV% Calculator</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <style>
+    :root {
+      --maroon: #5D1725;
+      --white: #ffffff;
+    }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      background: var(--maroon);
+      color: var(--white);
+    }
+    .wrap {
+      max-width: 420px;
+      margin: 0 auto;
+      padding: 10px;
+      text-align: center;
+    }
+    .logo {
+      width: 180px;
+      height: auto;
+      margin: 10px auto 8px;
+      display: block;
+    }
+    .top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--white);
+      color: var(--maroon);
+      padding: 8px 12px;
+      border-radius: 10px;
+    }
+    .title {
+      font-size: 1rem;
+      font-weight: 800;
+    }
+    .mini {
+      display: flex;
+      gap: 6px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px 10px;
+      border-radius: 8px;
+      border: 1px solid var(--white);
+      background: var(--maroon);
+      color: var(--white);
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+    .btn.primary {
+      background: var(--white);
+      color: var(--maroon);
+    }
+    .card {
+      background: var(--white);
+      color: var(--maroon);
+      border-radius: 10px;
+      padding: 10px;
+      margin-top: 10px;
+      text-align: left;
+    }
+    .head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 4px;
+    }
+    .head .h {
+      font-weight: 800;
+      font-size: 0.9rem;
+    }
+    .timestamp {
+      font-size: 0.7rem;
+      color: var(--maroon);
+    }
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4px;
+      margin-bottom: 4px;
+    }
+    label {
+      font-size: 0.7rem;
+      color: var(--maroon);
+    }
+    input[type=number] {
+      width: 85%;
+      font-size: 1rem;
+      padding: 4px 6px;
+      border-radius: 8px;
+      border: 1px solid var(--maroon);
+      color: var(--maroon);
+      background: var(--white);
+      display: block;
+      margin: 0 auto;
+    }
+    input[type=number]:focus {
+      outline: none;
+      border-color: var(--maroon);
+      box-shadow: 0 0 0 2px rgba(93, 23, 37, 0.3);
+    }
+    .kpis {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 4px;
+      margin-top: 4px;
+    }
+    .kpi {
+      background: var(--maroon);
+      color: var(--white);
+      border-radius: 8px;
+      padding: 6px;
+      text-align: center;
+    }
+    .kpi h3 {
+      margin: 0;
+      font-size: 0.68rem;
+      color: var(--white);
+    }
+    .kpi .big {
+      font-size: 1.1rem;
+      font-weight: 800;
+    }
+    .strip {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 6px;
+      margin-top: 6px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Mississippi_State_Bulldogs_script_logo.svg/1200px-Mississippi_State_Bulldogs_script_logo.svg.png" alt="Mississippi State Logo" />
+
+    <div class="top">
+      <h1 class="title">REB% & TOV% Calculator</h1>
+      <div class="mini">
+        <button class="btn" id="reset">Reset</button>
+        <button class="btn" id="copy">Copy</button>
+        <button class="btn" id="share">Share</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="head"><div class="h">MSU</div><div class="timestamp" id="timestamp">—</div></div>
+      <div class="row">
+        <div><label for="oreb">OREB</label><input id="oreb" type="number" placeholder="8" /></div>
+        <div><label for="dreb">DREB</label><input id="dreb" type="number" placeholder="21" /></div>
+      </div>
+      <div class="row">
+        <div><label for="fga">FGA</label><input id="fga" type="number" placeholder="28" /></div>
+        <div><label for="fta">FTA</label><input id="fta" type="number" placeholder="12" /></div>
+      </div>
+      <div class="row">
+        <div><label for="to">TO</label><input id="to" type="number" placeholder="9" /></div>
+        <div><label for="oppdreb">Opp DREB</label><input id="oppdreb" type="number" placeholder="30" /></div>
+      </div>
+      <div class="kpis">
+        <div class="kpi"><h3>OREB%</h3><div class="big" id="orebp">—</div></div>
+        <div class="kpi"><h3>DREB%</h3><div class="big" id="drebp">—</div></div>
+        <div class="kpi"><h3>TOV%</h3><div class="big" id="tovp">—</div></div>
+        <div class="kpi"><h3>Poss</h3><div class="big" id="poss">—</div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="head"><div class="h">Opponent</div><div class="timestamp">FT×0.475</div></div>
+      <div class="row">
+        <div><label for="opporeb">OREB</label><input id="opporeb" type="number" placeholder="6" /></div>
+        <div><label for="oppdreb2">DREB</label><input id="oppdreb2" type="number" placeholder="30" /></div>
+      </div>
+      <div class="row">
+        <div><label for="oppfga">FGA</label><input id="oppfga" type="number" placeholder="26" /></div>
+        <div><label for="oppfta">FTA</label><input id="oppfta" type="number" placeholder="14" /></div>
+      </div>
+      <div class="row">
+        <div><label for="oppto">TO</label><input id="oppto" type="number" placeholder="11" /></div>
+        <div><label for="dreb2">Opp DREB</label><input id="dreb2" type="number" placeholder="21" /></div>
+      </div>
+      <div class="kpis">
+        <div class="kpi"><h3>OREB%</h3><div class="big" id="opp_orebp">—</div></div>
+        <div class="kpi"><h3>DREB%</h3><div class="big" id="opp_drebp">—</div></div>
+        <div class="kpi"><h3>TOV%</h3><div class="big" id="opptovp">—</div></div>
+        <div class="kpi"><h3>Poss</h3><div class="big" id="oppposs">—</div></div>
+      </div>
+    </div>
+
+    <div class="strip">
+      <div class="kpi"><h3>Total REB%</h3><div class="big" id="trebp">—</div></div>
+      <div class="kpi"><h3>Glass Margin</h3><div class="big" id="glassmargin">—</div></div>
+    </div>
+  </div>
+</body>
+</html>
